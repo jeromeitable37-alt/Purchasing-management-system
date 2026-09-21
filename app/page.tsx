@@ -170,7 +170,7 @@ export default function HomePage() {
 
   function mergeRecords<T extends { id: string }>(current: T[], incoming: T[]) {
     const byId = new Map(current.map(item => [item.id, item] as const));
-    incoming.forEach(item => byId.set(item.id, { ...byId.get(item), ...item }));
+    incoming.forEach(item => byId.set(item.id, { ...(byId.get(item.id) ?? {}), ...item }));
     return Array.from(byId.values()).sort((a: any, b: any) =>
       String(b.updatedAt || b.createdAt || "").localeCompare(String(a.updatedAt || a.createdAt || ""))
     );
